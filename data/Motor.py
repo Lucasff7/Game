@@ -1,10 +1,10 @@
+# Importa as funções
 import pygame, math, os
 from pygame.locals import *
 
 # Define colorkey como branco
 global e_colorkey
 e_colorkey = (255,255,255)
-
 def set_global_colorkey(colorkey):
     global e_colorkey
     e_colorkey = colorkey
@@ -32,6 +32,7 @@ class Fisica_obj(object):
         self.rect = pygame.Rect(x,y,self.width,self.height)
         self.x = x
         self.y = y
+    
     # Funçao que recebe colisão e define reação   
     def move(self,movement,platforms,names):
         self.x += movement[0]
@@ -69,14 +70,10 @@ class Fisica_obj(object):
         return collision_types
 
 # Função Geral (faz as animações, imagens etc)
-
-def simple_Geral(x,y,e_type):
-    return Geral(x,y,1,1,e_type)
-
 def flip(img,boolean=True):
     return pygame.transform.flip(img,boolean,False)
  
-def blit_center(surf,surf2,pos):
+def Centro(surf,surf2,pos):
     x = int(surf2.get_width()/2)
     y = int(surf2.get_height()/2)
     surf.blit(surf2,(pos[0]-x,pos[1]-y))
@@ -104,7 +101,7 @@ class Geral(object):
         self.Geral_data = {}
         self.alpha = None
  
-    def set_pos(self,x,y):
+    def def_pos(self,x,y):
         self.x = x
         self.y = y
         self.obj.x = x
@@ -124,11 +121,9 @@ class Geral(object):
     def set_flip(self,boolean):
         self.flip = boolean
  
-    def set_animation_tags(self,tags):
+    def def_animation(self,tags):
         self.animation_tags = tags
- 
 
- 
     def set_action(self,action_id,force=False):
         if (self.action == action_id) and (force == False):
             pass
@@ -136,20 +131,10 @@ class Geral(object):
             self.action = action_id
             anim = animation_higher_database[self.type][action_id]
             self.animation = anim[0]
-            self.set_animation_tags(anim[1])
+            self.def_animation(anim[1])
             self.animation_frame = 0
  
-    def clear_animation(self):
-        self.animation = None
- 
-    def set_frame(self,amount):
-        self.animation_frame = amount
- 
-    def handle(self):
-        self.action_timer += 1
-        self.change_frame(1)
- 
-    def change_frame(self,amount):
+    def Troca_frame(self,amount):
         self.animation_frame += amount
         if self.animation != None:
             while self.animation_frame < 0:
@@ -176,7 +161,7 @@ class Geral(object):
             image_to_render = pygame.transform.rotate(image_to_render,self.rotation)
             if self.alpha != None:
                 image_to_render.set_alpha(self.alpha)
-            blit_center(surface,image_to_render,(int(self.x)-scroll[0]+self.offset[0]+center_x,int(self.y)-scroll[1]+self.offset[1]+center_y))
+            Centro(surface,image_to_render,(int(self.x)-scroll[0]+self.offset[0]+center_x,int(self.y)-scroll[1]+self.offset[1]+center_y))
  
 # Animações
 
@@ -185,7 +170,8 @@ animation_database = {}
  
 global animation_higher_database
 animation_higher_database = {}
-#[1,2], onde 1 é o nome da imagem e 2 o tempo
+
+# [1,2], onde 1 é o nome da imagem e 2 o tempo
 def animation_sequence(sequence,base_path,colorkey=(255,255,255),transparency=255):
     global animation_database
     result = []
@@ -199,11 +185,8 @@ def animation_sequence(sequence,base_path,colorkey=(255,255,255),transparency=25
             result.append(image_id)
     return result
  
- 
-def get_frame(ID):
-    global animation_database
-    return animation_database[ID]
- 
+
+# Carrega as animações
 def load_animations(path):
     global animation_higher_database, e_colorkey
     f = open(path + 'geral_animations.txt','r')

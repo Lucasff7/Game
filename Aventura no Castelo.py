@@ -282,26 +282,26 @@ while True:
                     if local_porta == tile_names['D'][0]:
                         px = tile_names['D'][4].x
                         py = tile_names['D'][4].y
-                        player.set_pos(px, py)
+                        player.def_pos(px, py)
                     elif local_porta == tile_names['D'][1]:
                         px = tile_names['D'][2].x
                         py = tile_names['D'][2].y
-                        player.set_pos(px, py)
+                        player.def_pos(px, py)
                     elif local_porta == tile_names['D'][2]:
                         px = tile_names['D'][1].x
                         py = tile_names['D'][1].y
-                        player.set_pos(px, py)
+                        player.def_pos(px, py)
                     # Muda o mapa do jogador
                     elif local_porta == tile_names['D'][3]:
                         last_door = tile_names['D'][3]
                         numero_nivel = 1
                         px = 80
                         py = 96
-                        player.set_pos(px, py)       
+                        player.def_pos(px, py)       
                     elif local_porta == tile_names['D'][4]:
                         px = tile_names['D'][0].x
                         py = tile_names['D'][0].y
-                        player.set_pos(px, py)    
+                        player.def_pos(px, py)    
                     # Muda o estado do bau permanetemente
                     elif local_porta == tile_names['C'][0]:
                         abre_o_bau('data/map1.txt', tile_names, 0)
@@ -314,7 +314,7 @@ while True:
                         numero_nivel = 0
                         px = last_door.x
                         py = last_door.y
-                        player.set_pos(px, py)
+                        player.def_pos(px, py)
                     elif local_porta == tile_names['C'][0]:
                         abre_o_bau('data/map2.txt', tile_names, 0)
                         score += 1000 
@@ -333,7 +333,7 @@ while True:
     else:
         air_timer += 1
 # Estabelece as animações
-    player.change_frame(1)
+    player.Troca_frame(1)
     player.display(display,scroll)
 
     # Define a partir de quando o enemy começa a seguir o player
