@@ -2,7 +2,7 @@
 
 Para jogar rode o código "Aventura no Castelo.py" junto com a pasta "data".
 
-O jogo não está completo, falta ataques, vida, e dano aos inimigos,as animações dos inimigos (que foram implementadas mas não funcionou) além de pontos que seriam somados quando os baús fossem abertos. 
+O jogo não está completo, falta ataques, vida, dano aos inimigos, e as animações dos inimigos (que foram implementadas mas não funcionou) além de pontos que seriam somados quando os baús fossem abertos. 
 Não foi possível completa-lo por falta de tempo.
 
 Por: Bernardo Cunha Capoferri; Lucas Franco Florentino
