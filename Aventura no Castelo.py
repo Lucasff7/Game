@@ -16,18 +16,18 @@ pygame.init()
 pygame.mixer.init()
 
 # Nome da janela
-pygame.display.set_caption('Meu game')
+pygame.display.set_caption('Aventura no Castelo')
 
 # Define tamanho da janela
 WIDTH = 600 
 HEIGHT = 400
 WINDOW_SIZE = (WIDTH,HEIGHT)
-
 screen = pygame.display.set_mode(WINDOW_SIZE,0,32) 
 
 # Tamanho que será mostrado
 display = pygame.Surface((WIDTH/2,HEIGHT/2)) 
 
+# Define variaveis que serão usadas nas definições
 moving_right = False
 moving_left = False
 player_y_momentum = 0 
@@ -59,7 +59,7 @@ levels = ['data/map1', 'data/map2']
 numero_nivel = 0
 
 
-# Carrega as imagens
+# Carrega as imagens dos tiles usados no mapa
 ground_img = pygame.image.load('data/img/ground_1.png')
 plataform_img = pygame.image.load('data/img/platform.png')
 wall_img = pygame.image.load('data/img/wall.png')
@@ -87,7 +87,6 @@ sons_passo[1].set_volume(0.2) ##
 # Música tema
 pygame.mixer.music.load('data/audio/music.wav')
 pygame.mixer.music.set_volume(0.4)
-
 pygame.mixer.music.play(-1) #-1 para deixar a musica tocando infinitamente
 
 # Background do menu
@@ -126,7 +125,7 @@ def deteccao_porta(object_1,object_list,names):
             return True, coordinates
     return False, coordinates    
 
-# Função modifica o mapa para que os baus que foram abertos fiquem abertos
+# Função modifica o mapa para que os baus que foram abertos fiquem abertos após fechar o jogo
 def abre_o_bau(map_file, names, num_chest):
     line_chest = (names['C'][num_chest].y)/16
     with open(map_file, 'r') as map_data:
@@ -141,12 +140,12 @@ def abre_o_bau(map_file, names, num_chest):
 rodando = True
 menu = True 
 while True:
+    # Cria o menu do jogo
     while menu:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
                     menu = False
         screen.fill((0,0,0))
         clock.tick(30)
@@ -158,7 +157,7 @@ while True:
     # Carrega o mapa 
     mapa = carrega_o_mapa(levels[numero_nivel])
 
-    # Cria loop infinito musica
+    # Cria loop infinito do som de passo
     if tempo_passo > 0:
         tempo_passo -= 1
     
@@ -268,10 +267,11 @@ while True:
         player.set_flip(True)
         player.set_action('run')
 
+# Define colisões do jogador com o ambiente
     collisions_types = player.move(player_movement,tile_rects, tile_names)
     em_frente_porta,local_porta = deteccao_porta(player,tile_rects, tile_names)
 
-# Caso se o jogador tiver que interagir com uma porta
+# Caso o jogador interaja com uma porta
     if em_frente_porta:
         if event.type == KEYDOWN:
             if event.key == K_e:
@@ -302,7 +302,7 @@ while True:
                         px = tile_names['D'][0].x
                         py = tile_names['D'][0].y
                         player.def_pos(px, py)    
-                    # Muda o estado do bau permanetemente
+                    # Muda o estado do bau para permanetemente
                     elif local_porta == tile_names['C'][0]:
                         abre_o_bau('data/map1.txt', tile_names, 0)
                         score += 1000 

@@ -23,7 +23,7 @@ def collision_test(object_1, object_list, names):
                     name = key
     return collision_list, name
 
-# Física
+# Física do jogo
 class Fisica_obj(object):
    
     def __init__(self,x,y,x_size,y_size):
@@ -68,16 +68,17 @@ class Fisica_obj(object):
             self.change_y = 0
             self.y = self.rect.y
         return collision_types
-
-# Função Geral (faz as animações, imagens etc)
+# Define Flip para mudar a imagem e a animação de acordo com sua movimentação (direita/esquerda)
 def flip(img,boolean=True):
     return pygame.transform.flip(img,boolean,False)
- 
+
+# Define o centro do display
 def Centro(surf,surf2,pos):
     x = int(surf2.get_width()/2)
     y = int(surf2.get_height()/2)
     surf.blit(surf2,(pos[0]-x,pos[1]-y))
- 
+
+# Função Geral (faz as animações, imagens etc)
 class Geral(object):
     global animation_database, animation_higher_database
    
@@ -100,7 +101,8 @@ class Geral(object):
         self.set_action('idle') 
         self.Geral_data = {}
         self.alpha = None
- 
+
+# Define a posição
     def def_pos(self,x,y):
         self.x = x
         self.y = y
@@ -108,22 +110,27 @@ class Geral(object):
         self.obj.y = y
         self.obj.rect.x = x
         self.obj.rect.y = y
- 
+
+# Define a movimentação 
     def move(self,momentum,platforms, names):
         collisions = self.obj.move(momentum,platforms, names)
         self.x = self.obj.x
         self.y = self.obj.y
         return collisions
- 
+
+# Define as colisões com x e y
     def rect(self):
         return pygame.Rect(self.x,self.y,self.size_x,self.size_y)
- 
+
+# Aplica o flip na imagem
     def set_flip(self,boolean):
         self.flip = boolean
- 
+
+# Função para definir as animações
     def def_animation(self,tags):
         self.animation_tags = tags
 
+# Aplica as açoes 
     def set_action(self,action_id,force=False):
         if (self.action == action_id) and (force == False):
             pass
@@ -134,6 +141,7 @@ class Geral(object):
             self.def_animation(anim[1])
             self.animation_frame = 0
  
+# Troca o frame da animação, definindo por loop (no arquivo text)
     def Troca_frame(self,amount):
         self.animation_frame += amount
         if self.animation != None:
@@ -148,6 +156,7 @@ class Geral(object):
                 else:
                     self.animation_frame = len(self.animation)-1
 
+# Inicializa o display do jogo
     def display(self,surface,scroll):
         image_to_render = None
         if self.animation == None:
@@ -165,9 +174,9 @@ class Geral(object):
  
 # Animações
 
+# Define dicionários com as animações
 global animation_database
 animation_database = {}
- 
 global animation_higher_database
 animation_higher_database = {}
 
